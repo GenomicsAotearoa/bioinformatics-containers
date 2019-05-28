@@ -1,0 +1,3 @@
+[submodule "adtex"]
+	path = adtex
+	url = https://github.com/BD2KGenomics/dockstore_tool_adtex.git

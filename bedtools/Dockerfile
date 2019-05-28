@@ -1,11 +1,24 @@
-FROM alpine 
+FROM alpine:3.9
+# Updated from alexcoppe/bio-dockers- New deps from cram integration
+ENV version 2.28.0
 
-RUN apk add --update alpine-sdk bash zlib-dev
+ADD https://github.com/arq5x/bedtools2/releases/download/v${version}/bedtools-${version}.tar.gz /tmp/
+COPY launch_bedtools.sh /tmp/
 
-ENV version 2.25.0
-ADD https://github.com/arq5x/bedtools2/releases/download/v${version}/bedtools-${version}.tar.gz /tmp
+RUN  apk add --update --no-cache libstdc++ bash python xz-dev bzip2-dev\
+    && apk add --update --no-cache --virtual=deps g++ make zlib-dev  \
+    && cd /tmp/ \
+    && tar xzvf bedtools-${version}.tar.gz \
+    && cd bedtools2 \
+    && make \
+    && chmod 750 /tmp/launch_bedtools.sh \
+    && rm /tmp/bedtools-${version}.tar.gz \
+    && rm -rf /tmp/bedtools2/test \
+    && rm -rf /tmp/bedtools2/src \
+    && rm -rf /tmp/bedtools2/docs \
+    && apk del deps
 
-RUN cd /tmp && tar -xzvf bedtools-${version}.tar.gz && cd bedtools2 && make
 
-
+CMD ["mapBed", "-h"]
+ENTRYPOINT ["bash", "/tmp/launch_bedtools.sh"]
 
