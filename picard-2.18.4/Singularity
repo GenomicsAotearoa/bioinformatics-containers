@@ -1,0 +1,5 @@
+Bootstrap: docker
+From: gacancergenomics/picard:2.18.4
+
+%post
+chmod +X /opt/picard.jar
