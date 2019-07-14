@@ -16,7 +16,7 @@ singularity build --force gatk-4.1.2.0.simg docker://broadinstitute/gatk:4.1.2.0
 echo "Building Lumpy"
 singularity build --force lumpy-0.3.simg docker://gacancergenomics/lumpy:0.3.0
 echo "Building Picard"
-singularity build --force picard-2.18.4.simg docker://gacancergenomics/picard:2.18.4
+singularity pull library://knowlton_lab/default/picard:latest 
 echo "Building Samtools"
 singularity build --force samtools-1.9.simg docker://gacancergenomics/samtools:1.9
 echo "Building VarScan"

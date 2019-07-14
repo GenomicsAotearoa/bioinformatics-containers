@@ -1,0 +1,10 @@
+Bootstrap: docker
+From: broadinstitute/picard
+
+%runscript
+    
+     exec java -jar /usr/picard/picard.jar "$@"
+    
+%post
+     chmod 755 /usr/picard/picard.jar
+     mkdir /data/
